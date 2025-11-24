@@ -1,0 +1,172 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: radial-gradient(circle at top, #f4f5fb, #e8eaf6);
+}
+
+.todo-card {
+  width: 100%;
+  max-width: 720px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 25px 60px rgba(59, 66, 110, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.todo-card header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.todo-card header p {
+  margin: 0.25rem 0 0;
+  color: #6b6f80;
+}
+
+.controls form {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.controls input {
+  flex: 1;
+  padding: 0.95rem 1.2rem;
+  border-radius: 14px;
+  border: 1px solid #d4d7e5;
+  font-size: 1rem;
+}
+
+.controls button {
+  padding: 0.95rem 1.5rem;
+  border-radius: 14px;
+  border: none;
+  background: #4f46e5;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.controls button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.controls button:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+}
+
+.filters {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filters button {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.65rem 1rem;
+  background: #f4f5fb;
+  color: #3c3f4c;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+.filters button.active {
+  background: #4f46e5;
+  color: #fff;
+}
+
+.error-pane {
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.list-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.list-section li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8f9fe;
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+}
+
+.list-section label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.list-section input[type='checkbox'] {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: #4f46e5;
+}
+
+.list-section .completed {
+  text-decoration: line-through;
+  color: #9aa0b5;
+}
+
+.list-section li button {
+  border: none;
+  background: transparent;
+  color: #ef4444;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.muted {
+  color: #8a90a6;
+  text-align: center;
+}
+
+footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  text-align: center;
+  color: #6b6f80;
+}
+
+footer strong {
+  display: block;
+  font-size: 1.25rem;
+  color: #111;
+}
+
+@media (max-width: 640px) {
+  .todo-card {
+    padding: 1.5rem;
+  }
+
+  .controls form {
+    flex-direction: column;
+  }
+
+  .filters {
+    justify-content: center;
+  }
+}
