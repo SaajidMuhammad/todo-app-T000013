@@ -1,17 +1,23 @@
-const TodoItem = ({ todo, onToggle, onDelete }) => {
+const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
   return (
     <li>
-      <label>
-        <input
-          type="checkbox"
-          checked={todo.done}
-          onChange={() => onToggle(todo)}
-        />
-        <span className={todo.done ? 'completed' : ''}>{todo.title}</span>
-      </label>
-      <button type="button" onClick={() => onDelete(todo.id)}>
-        Remove
-      </button>
+      <div className="todo-info">
+        <label>
+          <input type="checkbox" checked={todo.done} onChange={() => onToggle(todo)} />
+          <div>
+            <span className={todo.done ? 'completed' : ''}>{todo.title}</span>
+            {todo.description ? <p className="todo-description">{todo.description}</p> : null}
+          </div>
+        </label>
+      </div>
+      <div className="todo-actions">
+        <button type="button" onClick={() => onEdit(todo)}>
+          Edit
+        </button>
+        <button type="button" onClick={() => onDelete(todo.id)}>
+          Remove
+        </button>
+      </div>
     </li>
   )
 }

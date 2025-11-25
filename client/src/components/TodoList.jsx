@@ -1,6 +1,6 @@
 import TodoItem from './TodoItem'
 
-const TodoList = ({ loading, filteredTodos, onToggle, onDelete }) => {
+const TodoList = ({ loading, filteredTodos, onToggle, onDelete, onEdit }) => {
   if (loading) {
     return <p className="muted">Loading tasks...</p>
   }
@@ -12,12 +12,7 @@ const TodoList = ({ loading, filteredTodos, onToggle, onDelete }) => {
   return (
     <ul>
       {filteredTodos.map(todo => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          onToggle={onToggle}
-          onDelete={onDelete}
-        />
+        <TodoItem key={todo.id} todo={todo} onToggle={onToggle} onDelete={onDelete} onEdit={onEdit} />
       ))}
     </ul>
   )

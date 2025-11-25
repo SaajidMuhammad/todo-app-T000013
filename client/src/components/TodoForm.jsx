@@ -1,4 +1,13 @@
-const TodoForm = ({ title, setTitle, description, setDescription, onSubmit, submitting }) => {
+const TodoForm = ({
+  title,
+  setTitle,
+  description,
+  setDescription,
+  onSubmit,
+  submitting,
+  editingTodo,
+  onCancelEdit
+}) => {
   return (
     <form onSubmit={onSubmit} className="todo-form">
       <div className="form-group">
@@ -25,9 +34,16 @@ const TodoForm = ({ title, setTitle, description, setDescription, onSubmit, subm
           rows={3}
         />
       </div>
-      <button type="submit" disabled={submitting} className="submit-button">
-        {submitting ? 'Adding...' : 'Add Task'}
-      </button>
+      <div className="form-actions">
+        {editingTodo && (
+          <button type="button" className="cancel-button" onClick={onCancelEdit} disabled={submitting}>
+            Cancel
+          </button>
+        )}
+        <button type="submit" disabled={submitting} className="submit-button">
+          {submitting ? (editingTodo ? 'Saving...' : 'Adding...') : editingTodo ? 'Update Task' : 'Add Task'}
+        </button>
+      </div>
     </form>
   )
 }

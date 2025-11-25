@@ -84,6 +84,30 @@
   line-height: 1.5;
 }
 
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.cancel-button {
+  padding: 0.95rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: transparent;
+  color: #6b7280;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.cancel-button:hover {
+  border-color: #9ca3af;
+  color: #374151;
+  background: #f9fafb;
+}
+
 .submit-button {
   padding: 0.95rem 1.5rem;
   border-radius: 12px;
@@ -159,14 +183,24 @@
   background: #f8f9fe;
   border-radius: 16px;
   padding: 1rem 1.25rem;
+  gap: 1rem;
 }
 
-.list-section label {
+.todo-info label {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.75rem;
+}
+
+.todo-info span {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+.todo-description {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: #6b7280;
 }
 
 .list-section input[type='checkbox'] {
@@ -180,12 +214,22 @@
   color: #9aa0b5;
 }
 
-.list-section li button {
+.todo-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.todo-actions button {
   border: none;
   background: transparent;
-  color: #ef4444;
+  color: #4f46e5;
   cursor: pointer;
   font-weight: 600;
+  padding: 0.25rem 0.5rem;
+}
+
+.todo-actions button:last-child {
+  color: #ef4444;
 }
 
 .muted {
@@ -212,12 +256,25 @@ footer strong {
     padding: 1.5rem;
   }
 
-  .submit-button {
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
     width: 100%;
-    align-self: stretch;
   }
 
   .filters {
     justify-content: center;
+  }
+
+  .list-section li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .todo-actions {
+    width: 100%;
+    justify-content: flex-end;
   }
 }

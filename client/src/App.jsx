@@ -17,6 +17,7 @@ const App = () => {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [filter, setFilter] = useState('all')
+  const [editingTodo, setEditingTodo] = useState(null)
 
   const fetchTodos = async () => {
     try {
@@ -32,6 +33,12 @@ const App = () => {
     }
   }
 
+  const resetForm = () => {
+    setTitle('')
+    setDescription('')
+    setEditingTodo(null)
+  }
+
   const handleSubmit = async event => {
     event.preventDefault()
     if (!title.trim()) {
@@ -40,27 +47,42 @@ const App = () => {
     }
     try {
       setSubmitting(true)
-      const response = await fetch(`${API_BASE_URL}/todos`, {
-        method: 'POST',
+      const payload = {
+        title: title.trim(),
+        description: description.trim()
+      }
+      const endpoint = editingTodo ? `${API_BASE_URL}/todos/${editingTodo.id}` : `${API_BASE_URL}/todos`
+      const method = editingTodo ? 'PUT' : 'POST'
+      const response = await fetch(endpoint, {
+        method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          title: title.trim(),
-          description: description.trim()
-        })
+        body: JSON.stringify(payload)
       })
       if (!response.ok) {
-        throw new Error('Failed to create todo')
+        throw new Error('Failed to save todo')
       }
       const created = await response.json()
-      setTodos(current => [created, ...current])
-      setTitle('')
-      setDescription('')
+      setTodos(current =>
+        editingTodo ? current.map(item => (item.id === created.id ? created : item)) : [created, ...current]
+      )
+      resetForm()
       setError('')
     } catch {
-      setError('Unable to create todo.')
+      setError('Unable to save todo.')
     } finally {
       setSubmitting(false)
     }
+  }
+
+  const handleEditRequest = todo => {
+    setEditingTodo(todo)
+    setTitle(todo.title)
+    setDescription(todo.description || '')
+    setError('')
+  }
+
+  const handleCancelEdit = () => {
+    resetForm()
   }
 
   const handleToggle = async todo => {
@@ -126,6 +148,8 @@ const App = () => {
             setDescription={setDescription}
             onSubmit={handleSubmit}
             submitting={submitting}
+            editingTodo={editingTodo}
+            onCancelEdit={handleCancelEdit}
           />
           <TodoFilters filter={filter} setFilter={setFilter} />
         </section>
@@ -136,6 +160,7 @@ const App = () => {
             filteredTodos={filteredTodos}
             onToggle={handleToggle}
             onDelete={handleDelete}
+            onEdit={handleEditRequest}
           />
         </section>
         <TodoStats stats={stats} />
