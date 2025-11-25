@@ -94,7 +94,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
-  align-self: flex-start;
+  align-self: flex-end;
 }
 
 .submit-button:disabled {

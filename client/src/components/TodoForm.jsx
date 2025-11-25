@@ -10,7 +10,6 @@ const TodoForm = ({ title, setTitle, description, setDescription, onSubmit, subm
           value={title}
           onChange={event => setTitle(event.target.value)}
           disabled={submitting}
-          required
         />
       </div>
       <div className="form-group">
