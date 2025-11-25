@@ -11,7 +11,8 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api'
 
 const App = () => {
   const [todos, setTodos] = useState([])
-  const [formValue, setFormValue] = useState('')
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -33,7 +34,7 @@ const App = () => {
 
   const handleSubmit = async event => {
     event.preventDefault()
-    if (!formValue.trim()) {
+    if (!title.trim()) {
       setError('Please add a title before submitting.')
       return
     }
@@ -42,14 +43,18 @@ const App = () => {
       const response = await fetch(`${API_BASE_URL}/todos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: formValue.trim() })
+        body: JSON.stringify({ 
+          title: title.trim(),
+          description: description.trim()
+        })
       })
       if (!response.ok) {
         throw new Error('Failed to create todo')
       }
       const created = await response.json()
       setTodos(current => [created, ...current])
-      setFormValue('')
+      setTitle('')
+      setDescription('')
       setError('')
     } catch {
       setError('Unable to create todo.')
@@ -60,10 +65,8 @@ const App = () => {
 
   const handleToggle = async todo => {
     try {
-      const response = await fetch(`${API_BASE_URL}/todos/${todo.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ completed: !todo.completed })
+      const response = await fetch(`${API_BASE_URL}/todos/${todo.id}/done`, {
+        method: 'PATCH'
       })
       if (!response.ok) {
         throw new Error('Failed to update todo')
@@ -89,17 +92,17 @@ const App = () => {
 
   const filteredTodos = useMemo(() => {
     if (filter === 'completed') {
-      return todos.filter(todo => todo.completed)
+      return todos.filter(todo => todo.done)
     }
     if (filter === 'active') {
-      return todos.filter(todo => !todo.completed)
+      return todos.filter(todo => !todo.done)
     }
     return todos
   }, [filter, todos])
 
   const stats = useMemo(() => {
     const total = todos.length
-    const completed = todos.filter(todo => todo.completed).length
+    const completed = todos.filter(todo => todo.done).length
     return {
       total,
       completed,
@@ -117,8 +120,10 @@ const App = () => {
         <TodoHeader />
         <section className="controls">
           <TodoForm
-            formValue={formValue}
-            setFormValue={setFormValue}
+            title={title}
+            setTitle={setTitle}
+            description={description}
+            setDescription={setDescription}
             onSubmit={handleSubmit}
             submitting={submitting}
           />
