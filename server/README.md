@@ -45,6 +45,7 @@ The server will start on `http://localhost:4000` by default.
 
 ## API Endpoints
 
+
 ### Health Check
 - `GET /health` - Returns server status
 
